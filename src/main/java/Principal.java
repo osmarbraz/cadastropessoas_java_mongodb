@@ -114,12 +114,12 @@ public class Principal {
 
         System.out.println("\n--- LISTA DE PESSOAS ---");
 
-        // Variáveis: controla se existem nomes.
+        // Variáveis: controla se existem pessoas.
         boolean encontrou = false;
 
         // Processamento: percorre os documentos em ordem de nome.
         for (Document pessoadoc : test.find().sort(ascending("nome"))) {
-            // Saída: apresenta cada nome.
+            // Saída: apresenta o nome de cada pessoa.
             exibirDbTest(pessoadoc);
             encontrou = true;
         }
