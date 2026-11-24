@@ -110,7 +110,7 @@ public class Principal {
         System.out.println("ID: " + resultado.getInsertedId());
     }
 
-    private static void listar(MongoCollection<Document> test) {
+    private static void listar(MongoCollection<Document> dbTest) {
 
         System.out.println("\n--- LISTA DE PESSOAS ---");
 
@@ -118,7 +118,7 @@ public class Principal {
         boolean encontrou = false;
 
         // Processamento: percorre os documentos em ordem de nome.
-        for (Document pessoadoc : test.find().sort(ascending("nome"))) {
+        for (Document pessoadoc : dbTest.find().sort(ascending("nome"))) {
             // Saída: apresenta o nome de cada pessoa.
             exibirDbTest(pessoadoc);
             encontrou = true;
