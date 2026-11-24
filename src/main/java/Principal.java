@@ -173,7 +173,6 @@ public class Principal {
             Document pessoadoc = dbTest.find(eq("_id", id)).first();
 
             if (pessoadoc != null) {
-
                 // Saída: apresenta os dados atuais.
                 System.out.println("Nome atual:");
                 exibirDbTest(pessoadoc);
@@ -218,7 +217,6 @@ public class Principal {
             Document pessoadoc = dbTest.find(eq("_id", id)).first();
 
             if (pessoadoc != null) {
-
                 // Saída: mostra os dados antes da exclusão.
                 exibirDbTest(pessoadoc);
 
