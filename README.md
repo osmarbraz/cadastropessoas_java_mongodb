@@ -43,7 +43,7 @@ Adicione a seguinte dependência ao arquivo `pom.xml`:
 A organização recomendada para o projeto Maven é:
 
 ```text
-CadastroMongoDB/
+cadastropessoas_java_mongodb/
 │
 ├── pom.xml
 ├── .gitignore
