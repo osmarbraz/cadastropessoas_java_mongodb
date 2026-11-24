@@ -21,7 +21,7 @@ public class Principal {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-       public static void main(String[] args) {
+    public static void main(String[] args) {
 
         // Variáveis: URI com banco e porta.
         String uri = "mongodb://localhost:27017";
@@ -90,7 +90,7 @@ public class Principal {
             scanner.close();
         }
     }
-   
+
     private static void cadastrar(MongoCollection<Document> dbTest) {
 
         System.out.println("\n--- CADASTRAR PESSOA ---");
@@ -98,7 +98,7 @@ public class Principal {
         // Entrada: recebe o nome.
         System.out.print("Nome: ");
         String nome = scanner.nextLine();
-        
+
         // Processamento: monta o documento BSON.
         Document pessoadoc = new Document().append("nome", nome);
 
@@ -110,7 +110,7 @@ public class Principal {
         System.out.println("ID: " + resultado.getInsertedId());
     }
 
-     private static void listar(MongoCollection<Document> test) {
+    private static void listar(MongoCollection<Document> test) {
 
         System.out.println("\n--- LISTA DE PESSOAS ---");
 
@@ -128,7 +128,7 @@ public class Principal {
             System.out.println("Nenhuma pessoa cadastrada.");
         }
     }
- 
+
     private static void consultar(MongoCollection<Document> dbTest) {
 
         System.out.println("\n--- CONSULTAR PESSOA ---");
@@ -140,7 +140,6 @@ public class Principal {
         // Verifica se o texto do id é válido
         if (!ObjectId.isValid(texto)) {
             System.out.println("ID invalido.");
-
         } else {
             ObjectId id = new ObjectId(texto);
 
@@ -156,7 +155,7 @@ public class Principal {
         }
     }
 
-      private static void atualizar(MongoCollection<Document> dbTest) {
+    private static void atualizar(MongoCollection<Document> dbTest) {
 
         System.out.println("\n--- ATUALIZAR PESSOA ---");
 
@@ -173,30 +172,30 @@ public class Principal {
             // Processamento: verifica se o nome existe.
             Document pessoadoc = dbTest.find(eq("_id", id)).first();
 
-            if (pessoadoc == null) {
-                System.out.println("Pessoa nao encontrada.");
-                return;
-            }
+            if (pessoadoc != null) {
 
-            // Saída: apresenta os dados atuais.
-            System.out.println("Nome atual:");
-            exibirDbTest(pessoadoc);
+                // Saída: apresenta os dados atuais.
+                System.out.println("Nome atual:");
+                exibirDbTest(pessoadoc);
 
-            // Entrada: recebe os novos valores.
-            System.out.println("Digite os novos dados:");
-            System.out.print("Novo nome: ");
-            String nome = scanner.nextLine();
-            
-            // Processamento: atualiza o campo no banco.
-            UpdateResult resultado = dbTest.updateOne(
-                    eq("_id", id),
-                    set("nome", nome));
+                // Entrada: recebe os novos valores.
+                System.out.println("Digite os novos dados:");
+                System.out.print("Novo nome: ");
+                String nome = scanner.nextLine();
 
-            // Saída: informa o resultado da operação.
-            if (resultado.getModifiedCount() > 0) {
-                System.out.println("Pessoa atualizada com sucesso!");
+                // Processamento: atualiza o campo no banco.
+                UpdateResult resultado = dbTest.updateOne(
+                        eq("_id", id),
+                        set("nome", nome));
+
+                // Saída: informa o resultado da operação.
+                if (resultado.getModifiedCount() > 0) {
+                    System.out.println("Pessoa atualizada com sucesso!");
+                } else {
+                    System.out.println("Nenhuma alteracao foi realizada.");
+                }
             } else {
-                System.out.println("Nenhuma alteracao foi realizada.");
+                System.out.println("Pessoa nao encontrada.");
             }
         }
     }
@@ -208,7 +207,7 @@ public class Principal {
         // Entrada: recebe o ID da pessoa.
         System.out.print("Informe o ID da pessoa: ");
         String texto = scanner.nextLine().trim();
-        
+
         // Verifica se o texto do id é válido
         if (!ObjectId.isValid(texto)) {
             System.out.println("ID invalido.");
@@ -218,31 +217,31 @@ public class Principal {
             // Processamento: verifica se o nome existe.
             Document pessoadoc = dbTest.find(eq("_id", id)).first();
 
-            if (pessoadoc == null) {
-                System.out.println("Pessoa nao encontrada.");
-                return;
-            }
+            if (pessoadoc != null) {
 
-            // Saída: mostra os dados antes da exclusão.
-            exibirDbTest(pessoadoc);
+                // Saída: mostra os dados antes da exclusão.
+                exibirDbTest(pessoadoc);
 
-            // Entrada: solicita confirmação.
-            System.out.print("Confirma a exclusao? (S/N): ");
-            String confirmacao = scanner.nextLine().trim();
+                // Entrada: solicita confirmação.
+                System.out.print("Confirma a exclusao? (S/N): ");
+                String confirmacao = scanner.nextLine().trim();
 
-            if (!confirmacao.equalsIgnoreCase("S")) {
-                System.out.println("Exclusão cancelada.");
-                return;
-            }
+                if (confirmacao.equalsIgnoreCase("S")) {
 
-            // Processamento: remove o documento do banco.
-            DeleteResult resultado = dbTest.deleteOne(eq("_id", id));
+                    // Processamento: remove o documento do banco.
+                    DeleteResult resultado = dbTest.deleteOne(eq("_id", id));
 
-            // Saída: informa o resultado da exclusão.
-            if (resultado.getDeletedCount() > 0) {
-                System.out.println("Pessoa excluida com sucesso!");
+                    // Saída: informa o resultado da exclusão.
+                    if (resultado.getDeletedCount() > 0) {
+                        System.out.println("Pessoa excluida com sucesso!");
+                    } else {
+                        System.out.println("Nenhuma pessoa foi excluida.");
+                    }
+                } else {
+                    System.out.println("Exclusão cancelada.");
+                }
             } else {
-                System.out.println("Nenhuma pessoa foi excluida.");
+                System.out.println("Pessoa nao encontrada.");
             }
         }
     }
@@ -250,6 +249,6 @@ public class Principal {
     private static void exibirDbTest(Document pessoadoc) {
         System.out.println("------------------------------");
         System.out.println("ID: " + pessoadoc.getObjectId("_id"));
-        System.out.println("Nome: " + pessoadoc.getString("nome"));        
+        System.out.println("Nome: " + pessoadoc.getString("nome"));
     }
 }
