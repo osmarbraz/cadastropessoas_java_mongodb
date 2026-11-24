@@ -215,3 +215,5 @@ Com este projeto, são explorados os seguintes conceitos:
 O projeto apresenta uma aplicação prática de integração entre Java e MongoDB, permitindo compreender como uma aplicação pode realizar operações de persistência de dados em um banco de dados orientado a documentos.
 
 A implementação demonstra as principais operações de manipulação de dados e serve como ponto de partida para o desenvolvimento de aplicações mais completas utilizando Java, Maven e MongoDB.
+
+Compare a diferença de se trabalhar com um banco de dados relacional no projeto:https://github.com/osmarbraz/cadastropessoas_java_mysql/
